@@ -17,7 +17,7 @@ func main() {
 
   app.Get("/graphql", func(c *fiber.Ctx) error {
       msg := fmt.Sprintf("✋ %s", c.Params("*"))
-      url := "http://127.0.0.1:8000/graphql"
+      url := "http://fastapi:8000/graphql"
       method := "POST"
 
       payload := strings.NewReader(`{"query":"{student { name city}}"}`)
@@ -49,6 +49,17 @@ func main() {
       return c.SendString(string(body)) // => ✋ register
   })
 
+  app.Get("/health", func(c *fiber.Ctx) error {
+      return c.SendString("heatlhy")
+  })
+
+  app.Get("/ready", func(c *fiber.Ctx) error {
+    return c.SendString("ready!")
+  })
+
+  app.Get("/startup", func(c *fiber.Ctx) error {
+    return c.SendString("started")
+  })
 
   log.Fatal(app.Listen(":3000"))
 
